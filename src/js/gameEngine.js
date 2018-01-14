@@ -133,7 +133,6 @@ export default class Game {
    * @param {Number} time 
    */
   animate(time) {
-    console.log(time)
     if (this.paused) {
       setTimeout(() => {
         this.animate(time)
