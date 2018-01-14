@@ -322,7 +322,7 @@ export default class Game {
     
     listener = this.findKeyListener(key)
     if (listener) {
-      listener()
+      listener(e)
     }
   }
 
