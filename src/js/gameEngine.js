@@ -14,12 +14,11 @@ export default class Game {
     this.sprites = []
     this.keyListeners = []
 
-    // XXX: scores 暂不清楚作用
+    // localStorage 本地存储历史分数的键名后缀
     this.HIGH_SCORES_SUFFIX = '_highscores'
 
     // image loading
     this.imageLoadingProgressCallback = null
-    // XXX: this.images = [] ??
     this.images = {}
     this.imageUrls = []
     this.imagesLoaded = 0
@@ -49,8 +48,8 @@ export default class Game {
       this.soundChannels.push(audio)
     }
 
-    window.onkeypress = (e) => { this.keyPressed(e) }
-    window.onkeydown = (e) => { this.keyPressed(e) }
+    window.onkeyup = (e) => { this.keyPressed(e, false) }
+    window.onkeydown = (e) => { this.keyPressed(e, true) }
   }
 
   /**
@@ -287,8 +286,9 @@ export default class Game {
   /**
    * called by key down and key press, init at constructor
    * @param {*} e 
+   * @param {Boolean} status keydown 为 true，keyup 为 false 
    */
-  keyPressed(e) {
+  keyPressed(e, status) {
     let listener = null, key
     switch (e.keyCode) {
       case 32:
@@ -322,7 +322,7 @@ export default class Game {
     
     listener = this.findKeyListener(key)
     if (listener) {
-      listener(e)
+      listener(e, status)
     }
   }
 
@@ -404,3 +404,37 @@ export default class Game {
     
   }
 }
+
+/*
+  键盘事件的改善，可实现同时按键的效果
+*/
+// function keyHandle(e, result) {
+//   switch (e.keyCode) {
+//     //case 88:myplan.fire = result;
+//     //break;
+//     case 90:
+//       myplan.rotateLeft = result;
+//       break;
+//     case 67:
+//       myplan.rotateRight = result;
+//       break;
+//     case 37:
+//       myplan.toLeft = result;
+//       break;
+//     case 38:
+//       myplan.toTop = result;
+//       break;
+//     case 39:
+//       myplan.toRight = result;
+//       break;
+//     case 40:
+//       myplan.toBottom = result;
+//       break;
+//   }
+// }
+// window.onkeydown = function(event) {
+//   keyHandle(event, true);
+// }
+// window.onkeyup = function(event) {
+//   keyHandle(event, false);
+// }
