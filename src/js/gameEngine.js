@@ -95,7 +95,7 @@ export default class Game {
   }
 
   /**
-   * 
+   * 返回图片加载进度
    */
   loadImages() {
     // if there are images left to load
@@ -378,7 +378,7 @@ export default class Game {
    * @param {string} name 
    */
   getSprite(name) {
-    for (const sprite of object) {
+    for (const sprite of this.sprites) {
       if (sprite.name === name) {
         return sprite
       }
