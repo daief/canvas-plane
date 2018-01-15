@@ -38,11 +38,7 @@ class SpriteSheetPainter {
   }
 
   advance() {
-    if (this.cellIndex == this.cells.length - 1) {
-      this.cellIndex = 0
-    } else {
-      this.cellIndex++
-    }
+    this.cellIndex = (this.cellIndex + 1) % this.cells.length
   }
 
   paint(sprite, context) {
@@ -118,8 +114,6 @@ class Sprite {
     this.velocityY = 0
     this.visible = true
     this.animating = false
-    this.painter = null
-    this.behaviors = []
   }
 
   paint(context) {
