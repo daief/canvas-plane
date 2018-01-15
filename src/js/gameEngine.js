@@ -404,37 +404,3 @@ export default class Game {
     
   }
 }
-
-/*
-  键盘事件的改善，可实现同时按键的效果
-*/
-// function keyHandle(e, result) {
-//   switch (e.keyCode) {
-//     //case 88:myplan.fire = result;
-//     //break;
-//     case 90:
-//       myplan.rotateLeft = result;
-//       break;
-//     case 67:
-//       myplan.rotateRight = result;
-//       break;
-//     case 37:
-//       myplan.toLeft = result;
-//       break;
-//     case 38:
-//       myplan.toTop = result;
-//       break;
-//     case 39:
-//       myplan.toRight = result;
-//       break;
-//     case 40:
-//       myplan.toBottom = result;
-//       break;
-//   }
-// }
-// window.onkeydown = function(event) {
-//   keyHandle(event, true);
-// }
-// window.onkeyup = function(event) {
-//   keyHandle(event, false);
-// }
