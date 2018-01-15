@@ -101,7 +101,7 @@ class SpriteAnimator {
  * 精灵
  */
 class Sprite {
-  constructor(name, painter, behaviors) {
+  constructor(name, painter, behaviors = []) {
     this.name = name
     this.painter = painter
     this.behaviors = behaviors
@@ -124,7 +124,7 @@ class Sprite {
 
   update(context, time) {
     for (let index = this.behaviors.length; index > 0; index--) {
-      this.behaviors[i - 1].execute(this, context, time)
+      this.behaviors[index - 1].execute(this, context, time)
     }
   }
 }
