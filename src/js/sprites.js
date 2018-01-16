@@ -19,6 +19,8 @@ class ImagePainter {
             sprite.width, sprite.height)
         }
       } else {
+        sprite.width = this.image.width
+        sprite.height = this.image.height
         context.drawImage(this.image,
           sprite.left, sprite.top,
           sprite.width, sprite.height)
@@ -43,6 +45,8 @@ class SpriteSheetPainter {
 
   paint(sprite, context) {
     let cell = this.cells[this.cellIndex]
+    sprite.width = cell.width
+    sprite.height = cell.height
     context.drawImage(this.spritesheet,
       cell.left, cell.top,
       cell.width, cell.height,
@@ -58,7 +62,7 @@ class SpriteSheetPainter {
 class SpriteAnimator {
   constructor(painters, elapsedCallback) {
     this.painters = painters
-    this.elapsedCallback = elapsedCallback || function () { }
+    this.elapsedCallback = elapsedCallback
     
     this.duration = 1000
     this.startTime = 0
