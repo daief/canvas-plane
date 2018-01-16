@@ -43,7 +43,7 @@ game.paintUnderSprites = function () {
   for (const s of this.sprites) {
     visibleSprites += s.visible
   }
-  this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${visibleSprites}/${this.sprites.length}`, 5, 15)
+  this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${visibleSprites}/${this.sprites.length}  ${parseInt(this.gameTime / 1000)}`, 5, 15)
 }
 
 function addPlayerBullet(time) {
