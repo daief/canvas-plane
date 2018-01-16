@@ -40,7 +40,7 @@ let normalCells = [
 
 let player = null
 
-export default function (game, runnerSheet) {
+export default function (game, playerSheet) {
   // single
   if (player) return player
 
@@ -82,31 +82,31 @@ export default function (game, runnerSheet) {
     }
   }
 
-  let normalPainter = new SpriteSheetPainter(normalCells, game.getImage(runnerSheet))
+  let normalPainter = new SpriteSheetPainter(normalCells, game.getImage(playerSheet))
   // 左移绘制器，实现过渡以及保持左移状态
-  let toLeftPainter = new SpriteSheetPainter(toLeftCells, game.getImage(runnerSheet))
-  let leftPainter = new SpriteSheetPainter(leftCells, game.getImage(runnerSheet))
+  let toLeftPainter = new SpriteSheetPainter(toLeftCells, game.getImage(playerSheet))
+  let leftPainter = new SpriteSheetPainter(leftCells, game.getImage(playerSheet))
   let leftAnimator = new SpriteAnimator([toLeftPainter], function (sprite) {
     sprite.painter = leftPainter
   })
   let leftReveseAnimator = new SpriteAnimator([
-      new SpriteSheetPainter(toLeftCells.slice().reverse(), game.getImage(runnerSheet))
+      new SpriteSheetPainter(toLeftCells.slice().reverse(), game.getImage(playerSheet))
     ], function (sprite) {
       sprite.painter = sprite.toRight ? rightPainter : normalPainter
     })
   // 右移绘制器，实现过渡以及保持右移状态
-  let toRightPainter = new SpriteSheetPainter(toRightCells, game.getImage(runnerSheet))
-  let rightPainter = new SpriteSheetPainter(rightCells, game.getImage(runnerSheet))
+  let toRightPainter = new SpriteSheetPainter(toRightCells, game.getImage(playerSheet))
+  let rightPainter = new SpriteSheetPainter(rightCells, game.getImage(playerSheet))
   let rightAnimator = new SpriteAnimator([toRightPainter], function (sprite) {
     sprite.painter = rightPainter
   })
   let rightReveseAnimator = new SpriteAnimator([
-      new SpriteSheetPainter(toRightCells.slice().reverse(), game.getImage(runnerSheet))
+      new SpriteSheetPainter(toRightCells.slice().reverse(), game.getImage(playerSheet))
     ], function (sprite) {
       sprite.painter = sprite.toLeft ? leftPainter : normalPainter
     })
 
-  player = new Sprite('runner', normalPainter, [normal, leftOrRight])
+  player = new Sprite('player', normalPainter, [normal, leftOrRight])
 
   // 左移（键）按下和弹起时调用，一次过程中只调用一次
   player.leftCalled = function (status) {
