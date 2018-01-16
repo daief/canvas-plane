@@ -37,8 +37,13 @@ game.startAnimate = function (time) {
   addPlayerBullet(time)
 }
 
-game.paintUnderSprites = function() {
-  this.context.fillText(`fps: ${parseInt(this.fps)}`, 5, 15)
+game.paintUnderSprites = function () {
+  // 可见精灵数
+  let visibleSprites = 0
+  for (const s of this.sprites) {
+    visibleSprites += s.visible
+  }
+  this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${visibleSprites}/${this.sprites.length}`, 5, 15)
 }
 
 function addPlayerBullet(time) {

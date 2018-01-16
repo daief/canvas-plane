@@ -5,11 +5,20 @@ import {
 export default class Game {
   constructor(gameName, canvasId) {
     this.canvas = document.getElementById(canvasId)
+    this.W = this.canvas.width
+    this.H = this.canvas.height
+
+    // real visible canvas context    
+    this._realContext = this.canvas.getContext('2d')
     
     // General
-    this.context = this.canvas.getContext('2d')
-    this.W = this.context.canvas.width
-    this.H = this.context.canvas.height
+    this._buffCanvas = document.createElement('canvas')
+    this._buffCanvas.width = this.W
+    this._buffCanvas.height = this.H
+
+    // buff context
+    this.context = this._buffCanvas.getContext('2d')
+    
     this.gameName = gameName
     this.sprites = []
     this.keyListeners = []
@@ -149,6 +158,10 @@ export default class Game {
 
       this.paintOverSprites()   // 重写
       this.endAnimate()         // 重写
+
+      // really draw visible canvas   
+      this._realContext.clearRect(0, 0, this.W, this.H)
+      this._realContext.drawImage(this._buffCanvas, 0, 0)
 
       // keep animate going
       window.requestAnimationFrame((time) => {
