@@ -72,8 +72,10 @@ export default function (game, playerSheet) {
       if (sprite.toDown) {
         sprite.top += game.pixelsPerFrame(now, sprite.velocityY)
       }
-      sprite.left = sprite.left >= game.W - sprite.width ? game.W - sprite.width : sprite.left
-      sprite.left = sprite.left <= 0 ? 0 : sprite.left
+      sprite.left = sprite.left >= game.W - sprite.width ? game.W - sprite.width :
+        sprite.left <= 0 ? 0 : sprite.left  
+      sprite.top = sprite.top >= game.H - sprite.height ? game.H - sprite.height :
+        sprite.top <= 0 ? 0 : sprite.top  
       if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL &&
         (sprite.toLeft || sprite.toRight)) {
         sprite.painter.advance()
