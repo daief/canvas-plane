@@ -51,7 +51,7 @@ class SpriteSheetPainter {
       cell.left, cell.top,
       cell.width, cell.height,
       sprite.left, sprite.top,
-      cell.width, cell.height);
+      cell.width, cell.height)
   }
 }
 

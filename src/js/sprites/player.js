@@ -137,9 +137,11 @@ export default function (game, playerSheet) {
   // player prop init
   player.left = (game.W - player.width) / 2
   player.top = game.H - player.height - 50
+  player.width = 32
+  player.height = 48
   
-  player.velocityX = 140
-  player.velocityY = 150
+  player.velocityX = 190
+  player.velocityY = 200
 
   player.toUp = false
   player.toDown = false
