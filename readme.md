@@ -1,4 +1,4 @@
-canvas plan，小游戏
+canvas plane，小游戏
 
 不务正业中……
 
