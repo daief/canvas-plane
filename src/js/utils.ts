@@ -1,7 +1,7 @@
 /**
  * return time now
  */
-function getTimeNow() {
+function getTimeNow(): number {
   return (+ new Date())
 }
 
