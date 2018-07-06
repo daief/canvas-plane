@@ -2,8 +2,26 @@ import './index.css'
 import Game from './js/Game'
 import playerSheet from './assets/pl00.png'
 import getPlayer, { Player } from './js/sprites/Player'
+import { PBulletsManager } from './js/sprites/PBullet';
 
 const game = new Game('project', 'canvas')
+const pBulletManager = new PBulletsManager(game, playerSheet)
+
+game.startAnimate = function (time) {
+  // 添加 bullet
+  pBulletManager.addPlayerBullet(time)
+}
+
+game.paintUnderSprites = function () {
+  // 可见精灵数
+  let visibleSprites = 0
+  for (const s of this.sprites) {
+    visibleSprites += s.visible
+  }
+  this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${
+    visibleSprites}/${this.sprites.length}  ${
+      parseInt((this.gameTime / 1000).toString())}`, 5, 15)
+}
 
 function init() {
   game.addSprite(getPlayer(game, playerSheet))

@@ -1,3 +1,5 @@
+import { Rect } from "./modals";
+
 /**
  * return time now
  */
@@ -20,7 +22,16 @@ function getGUID(): string {
   return guid
 }
 
+function is2RectIntersect(rect1: Rect, rect2: Rect): boolean {
+  const maxLeft = Math.max(rect1.left, rect2.left)
+  const maxTop = Math.max(rect1.top, rect2.top)
+  const minRight = Math.min(rect1.left + rect1.width, rect2.left + rect2.width)
+  const minBottom = Math.min(rect1.top + rect1.height, rect2.top + rect2.height)
+  return !(maxLeft > minRight || maxTop > minBottom)
+}
+
 export {
   getTimeNow,
-  getGUID
+  getGUID,
+  is2RectIntersect,
 }

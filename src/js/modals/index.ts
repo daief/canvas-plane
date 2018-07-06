@@ -26,3 +26,10 @@ export interface Behavior {
     PAGEFLIP_INTERVAL: number
     execute:  (sprite: Sprite, context: CanvasRenderingContext2D, now: number) => void
 }
+
+export interface Rect {
+  top: number
+  left: number
+  width: number
+  height: number
+}
