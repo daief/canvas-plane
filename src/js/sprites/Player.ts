@@ -81,14 +81,14 @@ export class Player extends Sprite {
   shieldTimer: number
   leftCalled: (status: boolean) => void
   rightCalled: (status: boolean) => void
-  getShield() {
+  getShield(duration: number) {
     this.shieldTimer && clearTimeout(this.shieldTimer)
 
     this.isShield = true
     this.shieldTimer = setTimeout(() => {
       this.isShield = false
       clearTimeout(this.shieldTimer)
-    }, 10000);
+    }, duration || 10000);
   }
 }
 
@@ -192,10 +192,10 @@ export default (game: Game, playerSheet: string) => {
   }
 
   // player prop init
-  player.left = (game.W - player.width) / 2
-  player.top = game.H - player.height - 50
   player.width = 32
   player.height = 48
+  player.left = (game.W - player.width) / 2
+  player.top = game.H - player.height - 50
   player.coreWidth = 10
   player.coreHeight = 10
 

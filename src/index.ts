@@ -5,8 +5,6 @@ import getPlayer, { Player } from './js/sprites/Player'
 
 const game = new Game('project', 'canvas')
 
-game.queueImage(playerSheet)
-
 function init() {
   game.addSprite(getPlayer(game, playerSheet))
 
@@ -60,7 +58,16 @@ function addKeyListeners(game: Game, player: Player) {
       player.toUp = status
     },
   })
+
+  game.addKeyListener({
+    key: 'p',
+    listener: (e: KeyboardEvent, status: boolean) => {
+      if (!status) game.togglePaused()
+    }
+  })
 }
+
+game.queueImage(playerSheet)
 
 let loadingInterval = setInterval(() => {
   if (game.loadImages() >= 100) {
