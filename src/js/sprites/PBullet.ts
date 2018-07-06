@@ -4,32 +4,25 @@ import { ImagePainter, Sprite } from "../Sprite";
 import { getGUID, is2RectIntersect, getVAngle } from "../utils";
 
 // 精灵图上的纵横长宽
-const cell = { left: 0, top: 147, width: 32, height: 11 }
+const cell = { left: 1, top: 1, width: 12, height: 56 }
 
 class BulletPainter extends ImagePainter {
   paint(sprite: Sprite, context: CanvasRenderingContext2D) {
-    const {velocityX, velocityY} = sprite
     if (this.image !== undefined) {
-      context.save()
-      context.rotate(Math.PI / 2 + Math.PI / 2 - getVAngle(velocityX, velocityY))
-      // context.rotate(Math.PI / 2)
       if (!this.image.complete) {
         this.image.onload = (e) => {
           context.drawImage(this.image,
             cell.left, cell.top,
             cell.width, cell.height,
-            sprite.top, - sprite.left - sprite.width,
+            sprite.left, sprite.top,
             cell.width, cell.height)
-
-          context.restore()
         }
       } else {
         context.drawImage(this.image,
           cell.left, cell.top,
           cell.width, cell.height,
-          sprite.top, - sprite.left - sprite.width,
+          sprite.left, sprite.top,
           cell.width, cell.height)
-        context.restore()
       }
     }
   }
@@ -48,8 +41,8 @@ export const buildBullet = (game: Game, sheet: string) => {
 
   const bullet = new Sprite(`bullet${getGUID()}`, new BulletPainter(sheet), [normal])
 
-  bullet.width = cell.height
-  bullet.height = cell.width
+  bullet.width = cell.width
+  bullet.height = cell.height
 
   bullet.velocityY = -770
 
@@ -58,7 +51,7 @@ export const buildBullet = (game: Game, sheet: string) => {
 
 export class PBulletsManager {
   playerBullets: Sprite[]
-  FIRE_TIME: number = 55
+  FIRE_TIME: number = 165
   FIRE_LAST: number = 0
   game: Game
   sheet: string
@@ -94,13 +87,11 @@ export class PBulletsManager {
     let b = this.getBullet() || this.addBullet()
     b.left = p.left
     b.top = p.top - b.height
-    b.velocityX = 0
     b.visible = true
 
     b = this.getBullet() || this.addBullet()
     b.left = p.left + p.width - b.width
     b.top = p.top - b.height
-    b.velocityX = 200
     b.visible = true
   }
 }

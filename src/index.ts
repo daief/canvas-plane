@@ -1,11 +1,12 @@
 import './index.css'
 import Game from './js/Game'
 import playerSheet from './assets/pl00.png'
+import bullets1 from './assets/bullets1.png'
 import getPlayer, { Player } from './js/sprites/Player'
 import { PBulletsManager } from './js/sprites/PBullet';
 
 const game = new Game('project', 'canvas')
-const pBulletManager = new PBulletsManager(game, playerSheet)
+const pBulletManager = new PBulletsManager(game, bullets1)
 
 game.startAnimate = function (time) {
   // 添加 bullet
@@ -86,6 +87,7 @@ function addKeyListeners(game: Game, player: Player) {
 }
 
 game.queueImage(playerSheet)
+game.queueImage(bullets1)
 
 let loadingInterval = setInterval(() => {
   if (game.loadImages() >= 100) {

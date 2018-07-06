@@ -35,8 +35,6 @@ function getVAngle(x: number, y: number): number {
   return Math.acos(x / (Math.sqrt(x * x + y * y)))
 }
 
-console.log(getVAngle)
-
 export {
   getTimeNow,
   getGUID,
