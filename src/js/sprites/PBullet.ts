@@ -1,16 +1,18 @@
 import Game from "../Game";
 import { Behavior, Rect } from "../modals";
 import { ImagePainter, Sprite } from "../Sprite";
-import { getGUID, is2RectIntersect } from "../utils";
+import { getGUID, is2RectIntersect, getVAngle } from "../utils";
 
 // 精灵图上的纵横长宽
 const cell = { left: 0, top: 147, width: 32, height: 11 }
 
 class BulletPainter extends ImagePainter {
   paint(sprite: Sprite, context: CanvasRenderingContext2D) {
+    const {velocityX, velocityY} = sprite
     if (this.image !== undefined) {
       context.save()
-      context.rotate(Math.PI / 2)
+      context.rotate(Math.PI / 2 + Math.PI / 2 - getVAngle(velocityX, velocityY))
+      // context.rotate(Math.PI / 2)
       if (!this.image.complete) {
         this.image.onload = (e) => {
           context.drawImage(this.image,
@@ -92,11 +94,13 @@ export class PBulletsManager {
     let b = this.getBullet() || this.addBullet()
     b.left = p.left
     b.top = p.top - b.height
+    b.velocityX = 0
     b.visible = true
 
     b = this.getBullet() || this.addBullet()
     b.left = p.left + p.width - b.width
     b.top = p.top - b.height
+    b.velocityX = 200
     b.visible = true
   }
 }

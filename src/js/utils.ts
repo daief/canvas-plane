@@ -30,8 +30,16 @@ function is2RectIntersect(rect1: Rect, rect2: Rect): boolean {
   return !(maxLeft > minRight || maxTop > minBottom)
 }
 
+// x, y 与水平夹角 弧度
+function getVAngle(x: number, y: number): number {
+  return Math.acos(x / (Math.sqrt(x * x + y * y)))
+}
+
+console.log(getVAngle)
+
 export {
   getTimeNow,
   getGUID,
   is2RectIntersect,
+  getVAngle,
 }
