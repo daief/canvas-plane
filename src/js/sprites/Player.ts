@@ -1,5 +1,7 @@
 import { SheetCell, Behavior } from "../modals";
 import Game from "../Game";
+import playerSheet from '../../assets/pl00.png'
+import core from '../../assets/core.png'
 import { Sprite, SpriteSheetPainter, SpriteAnimator } from "../Sprite";
 
 const normalCells: SheetCell[] = [
@@ -39,39 +41,6 @@ const rightCells: SheetCell[] = [
   { left: 224, top: 97, width: 32, height: 48 },
 ]
 
-class PlayerSheetPainter extends SpriteSheetPainter {
-  paint(sprite: Player, context: CanvasRenderingContext2D) {
-    const cell = this.cells[this.cellIndex]
-
-    context.drawImage(this.spritesheet,
-      cell.left, cell.top,
-      cell.width, cell.height,
-      sprite.left, sprite.top,
-      cell.width, cell.height)
-
-    const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
-    const [centerX, centerY] = [left + width / 2, top + height / 2]
-    context.save()
-    context.strokeStyle = '#bf2f2f'
-    context.fillStyle = '#dab0b0'
-    context.beginPath()
-    context.arc(centerX, centerY, coreHeight / 2, 0, 2 * Math.PI)
-    context.closePath()
-    context.stroke()
-    context.fill()
-
-    if (isShield) {
-      const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
-      context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
-      context.beginPath()
-      context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
-      context.closePath()
-      context.stroke()
-    }
-    context.restore()
-  }
-}
-
 export class Player extends Sprite {
   toUp: boolean
   toDown: boolean
@@ -94,8 +63,35 @@ export class Player extends Sprite {
 
 let player: Player = null
 
-export default (game: Game, playerSheet: string) => {
+export default (game: Game) => {
   if (player) return player
+
+  class PlayerSheetPainter extends SpriteSheetPainter {
+    paint(sprite: Player, context: CanvasRenderingContext2D) {
+      const cell = this.cells[this.cellIndex]
+
+      context.drawImage(this.spritesheet,
+        cell.left, cell.top,
+        cell.width, cell.height,
+        sprite.left, sprite.top,
+        cell.width, cell.height)
+
+      const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
+      const [centerX, centerY] = [left + width / 2, top + height / 2]
+      context.save()
+      context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
+
+      if (isShield) {
+        const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
+        context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
+        context.beginPath()
+        context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
+        context.closePath()
+        context.stroke()
+      }
+      context.restore()
+    }
+  }
 
   const normal: Behavior = {
     lastAdvance: 0,

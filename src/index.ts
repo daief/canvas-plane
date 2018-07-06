@@ -2,6 +2,7 @@ import './index.css'
 import Game from './js/Game'
 import playerSheet from './assets/pl00.png'
 import bullets1 from './assets/bullets1.png'
+import core from './assets/core.png'
 import getPlayer, { Player } from './js/sprites/Player'
 import { PBulletsManager } from './js/sprites/PBullet';
 
@@ -25,7 +26,7 @@ game.paintUnderSprites = function () {
 }
 
 function init() {
-  game.addSprite(getPlayer(game, playerSheet))
+  game.addSprite(getPlayer(game))
 
   const player = <Player> game.getSprite('player')
 
@@ -88,6 +89,7 @@ function addKeyListeners(game: Game, player: Player) {
 
 game.queueImage(playerSheet)
 game.queueImage(bullets1)
+game.queueImage(core)
 
 let loadingInterval = setInterval(() => {
   if (game.loadImages() >= 100) {
