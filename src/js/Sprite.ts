@@ -125,6 +125,7 @@ export class Sprite {
   top: number
   width: number
   height: number
+  // 核心区域
   coreWidth: number
   coreHeight: number
   velocityX: number

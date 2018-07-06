@@ -39,13 +39,57 @@ const rightCells: SheetCell[] = [
   { left: 224, top: 97, width: 32, height: 48 },
 ]
 
+class PlayerSheetPainter extends SpriteSheetPainter {
+  paint(sprite: Player, context: CanvasRenderingContext2D) {
+    const cell = this.cells[this.cellIndex]
+
+    context.drawImage(this.spritesheet,
+      cell.left, cell.top,
+      cell.width, cell.height,
+      sprite.left, sprite.top,
+      cell.width, cell.height)
+
+    const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
+    const [centerX, centerY] = [left + width / 2, top + height / 2]
+    context.save()
+    context.strokeStyle = '#bf2f2f'
+    context.fillStyle = '#dab0b0'
+    context.beginPath()
+    context.arc(centerX, centerY, coreHeight / 2, 0, 2 * Math.PI)
+    context.closePath()
+    context.stroke()
+    context.fill()
+
+    if (isShield) {
+      const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
+      context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
+      context.beginPath()
+      context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
+      context.closePath()
+      context.stroke()
+    }
+    context.restore()
+  }
+}
+
 export class Player extends Sprite {
   toUp: boolean
   toDown: boolean
   toLeft: boolean
   toRight: boolean
+  isShield: boolean = false
+  shieldTimer: number
   leftCalled: (status: boolean) => void
   rightCalled: (status: boolean) => void
+  getShield() {
+    this.shieldTimer && clearTimeout(this.shieldTimer)
+
+    this.isShield = true
+    this.shieldTimer = setTimeout(() => {
+      this.isShield = false
+      clearTimeout(this.shieldTimer)
+    }, 10000);
+  }
 }
 
 let player: Player = null
@@ -94,28 +138,28 @@ export default (game: Game, playerSheet: string) => {
   }
 
   const playerImage = game.getImage(playerSheet)
-  const normalPainter = new SpriteSheetPainter(normalCells, playerImage)
+  const normalPainter = new PlayerSheetPainter(normalCells, playerImage)
 
   // 左移绘制器，实现过渡以及保持左移状态
-  const toLeftPainter = new SpriteSheetPainter(toLeftCells, playerImage)
-  const leftPainter = new SpriteSheetPainter(leftCells, playerImage)
+  const toLeftPainter = new PlayerSheetPainter(toLeftCells, playerImage)
+  const leftPainter = new PlayerSheetPainter(leftCells, playerImage)
   const leftAnimator = new SpriteAnimator([toLeftPainter], function (sprite: Player) {
     sprite.painter = leftPainter
   })
   const leftReveseAnimator = new SpriteAnimator([
-      new SpriteSheetPainter(toLeftCells.slice().reverse(), playerImage)
+      new PlayerSheetPainter(toLeftCells.slice().reverse(), playerImage)
     ], function (sprite: Player) {
       sprite.painter = sprite.toRight ? rightPainter : normalPainter
     })
 
   // 右移绘制器，实现过渡以及保持右移状态
-  const toRightPainter = new SpriteSheetPainter(toRightCells, playerImage)
-  const rightPainter = new SpriteSheetPainter(rightCells, playerImage)
+  const toRightPainter = new PlayerSheetPainter(toRightCells, playerImage)
+  const rightPainter = new PlayerSheetPainter(rightCells, playerImage)
   const rightAnimator = new SpriteAnimator([toRightPainter], function (sprite: Player) {
     sprite.painter = rightPainter
   })
   const rightReveseAnimator = new SpriteAnimator([
-      new SpriteSheetPainter(toRightCells.slice().reverse(), playerImage)
+      new PlayerSheetPainter(toRightCells.slice().reverse(), playerImage)
     ], function (sprite: Player) {
       sprite.painter = sprite.toLeft ? leftPainter : normalPainter
     })
@@ -152,6 +196,8 @@ export default (game: Game, playerSheet: string) => {
   player.top = game.H - player.height - 50
   player.width = 32
   player.height = 48
+  player.coreWidth = 10
+  player.coreHeight = 10
 
   player.velocityX = 190
   player.velocityY = 200
