@@ -89,7 +89,7 @@ export default class Game {
   /**
    * called by key down and key press, init at constructor
    * @param {KeyboardEvent} e
-   * @param {Boolean} status keydown 为 true，keyup 为 false
+   * @param {boolean} status keydown 为 true，keyup 为 false
    */
   keyPressed(e: KeyboardEvent, status: boolean) {
     let listener = null, key: string

@@ -1,4 +1,4 @@
-import { Painter, SheetCell } from "./modals";
+import { Painter, SheetCell, Behavior } from "./modals";
 
 /**
  * 图像绘制器
@@ -119,18 +119,20 @@ export class SpriteAnimator {
  */
 export class Sprite {
   name: string
-  painter: any
-  behaviors: any[]
+  painter: Painter
+  behaviors: Behavior[]
   left: number
   top: number
   width: number
   height: number
+  coreWidth: number
+  coreHeight: number
   velocityX: number
   velocityY: number
   visible: boolean
   animating: boolean
 
-  constructor(name: string, painter: any, behaviors: any[]) {
+  constructor(name: string, painter: Painter, behaviors: Behavior[]) {
     this.name = name
     this.painter = painter
     this.behaviors = behaviors

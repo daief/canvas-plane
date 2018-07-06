@@ -15,3 +15,5 @@ npm run dev
 # build
 npm run build
 ```
+
+[Building with --no-cache gives correct bundle every time.](https://github.com/parcel-bundler/parcel/issues/1656)
