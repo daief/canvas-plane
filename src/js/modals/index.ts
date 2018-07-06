@@ -20,3 +20,9 @@ export interface SheetCell {
   width: number
   height: number
 }
+
+export interface Behavior {
+  lastAdvance: number
+    PAGEFLIP_INTERVAL: number
+    execute:  (sprite: Sprite, context: CanvasRenderingContext2D, now: number) => void
+}
