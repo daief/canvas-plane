@@ -1,9 +1,11 @@
 import Game, { game } from './Game'
 import playerSheet from '../assets/pl00.png'
 import bullets1 from '../assets/bullets1.png'
+import enemy1 from '../assets/enemy1.png'
 import core from '../assets/core.png'
 import {Player, getPlayer} from './sprites/Player'
 import { pBulletsManager } from './sprites/PBullet'
+import {getEnemy} from './sprites/Enemy'
 
 game.startAnimate = function (time) {
   // 添加 bullet
@@ -24,6 +26,7 @@ game.paintUnderSprites = function () {
 game.queueImage(playerSheet)
 game.queueImage(bullets1)
 game.queueImage(core)
+game.queueImage(enemy1)
 
 /**
  * 添加事件监听
@@ -100,6 +103,7 @@ export default () => {
 
       const player = getPlayer()
       game.addSprite(player)
+      game.addSprite(getEnemy())
 
       addKeyListeners(game, player)
 

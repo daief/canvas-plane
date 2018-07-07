@@ -5,7 +5,7 @@ import { getGUID, is2RectIntersect, getVAngle } from "../utils";
 import bullets1 from '../../assets/bullets1.png'
 
 // 精灵图上的纵横长宽
-const cell = { left: 1, top: 1, width: 12, height: 56 }
+const cell = { left: 1, top: 1, width: 6, height: 28 }
 
 class BulletPainter extends ImagePainter {
   paint(sprite: Sprite, context: CanvasRenderingContext2D) {

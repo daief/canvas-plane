@@ -96,7 +96,7 @@ export function getPlayer () {
 
   const normal: Behavior = {
     lastAdvance: 0,
-    PAGEFLIP_INTERVAL: 95,
+    PAGEFLIP_INTERVAL: 110,
     execute: function (sprite: Player, context: CanvasRenderingContext2D, now: number) {
       if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL &&
         !(sprite.toLeft !== sprite.toRight)) {
