@@ -1,7 +1,8 @@
-import Game from "../Game";
+import Game, {game} from "../Game";
 import { Behavior, Rect } from "../modals";
 import { ImagePainter, Sprite } from "../Sprite";
 import { getGUID, is2RectIntersect, getVAngle } from "../utils";
+import bullets1 from '../../assets/bullets1.png'
 
 // 精灵图上的纵横长宽
 const cell = { left: 1, top: 1, width: 12, height: 56 }
@@ -28,7 +29,7 @@ class BulletPainter extends ImagePainter {
   }
 }
 
-export const buildBullet = (game: Game, sheet: string) => {
+const buildBullet = (game: Game, sheet: string) => {
   const normal: Behavior = {
     lastAdvance: 0,
     PAGEFLIP_INTERVAL: 0,
@@ -53,12 +54,8 @@ export class PBulletsManager {
   playerBullets: Sprite[]
   FIRE_TIME: number = 165
   FIRE_LAST: number = 0
-  game: Game
-  sheet: string
 
-  constructor(game: Game, sheet: string) {
-    this.game = game
-    this.sheet = sheet
+  constructor() {
     this.playerBullets = []
   }
 
@@ -70,9 +67,9 @@ export class PBulletsManager {
     return null
   }
 
-  addBullet() {
-    const b = buildBullet(this.game, this.sheet)
-    this.game.addSprite(b)
+  private addBullet() {
+    const b = buildBullet(game, bullets1)
+    game.addSprite(b)
     this.playerBullets.push(b)
     return b
   }
@@ -83,7 +80,7 @@ export class PBulletsManager {
     this.FIRE_LAST = time
 
     // 从引擎中取出两颗闲置bullet精灵，相当于从 playerBullets 中取
-    let p = this.game.getSprite('player')
+    let p = game.getSprite('player')
     let b = this.getBullet() || this.addBullet()
     b.left = p.left
     b.top = p.top - b.height
@@ -96,11 +93,4 @@ export class PBulletsManager {
   }
 }
 
-let manager: PBulletsManager = null
-export default (game: Game, sheet: string) => {
-  if (manager) return manager
-  else {
-    manager = new PBulletsManager(game, sheet)
-    return manager
-  }
-}
+export const pBulletsManager = new PBulletsManager()

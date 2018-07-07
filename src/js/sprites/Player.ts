@@ -1,5 +1,5 @@
 import { SheetCell, Behavior } from "../modals";
-import Game from "../Game";
+import Game, {game} from "../Game";
 import playerSheet from '../../assets/pl00.png'
 import core from '../../assets/core.png'
 import { Sprite, SpriteSheetPainter, SpriteAnimator } from "../Sprite";
@@ -61,37 +61,38 @@ export class Player extends Sprite {
   }
 }
 
+class PlayerSheetPainter extends SpriteSheetPainter {
+  paint(sprite: Player, context: CanvasRenderingContext2D) {
+    const cell = this.cells[this.cellIndex]
+
+    context.drawImage(this.spritesheet,
+      cell.left, cell.top,
+      cell.width, cell.height,
+      sprite.left, sprite.top,
+      cell.width, cell.height)
+
+    const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
+    const [centerX, centerY] = [left + width / 2, top + height / 2]
+    context.save()
+    context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
+
+    if (isShield) {
+      const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
+      context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
+      context.beginPath()
+      context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
+      context.closePath()
+      context.stroke()
+    }
+    context.restore()
+  }
+}
+
 let player: Player = null
 
-export default (game: Game) => {
+// called after game ready
+export function getPlayer () {
   if (player) return player
-
-  class PlayerSheetPainter extends SpriteSheetPainter {
-    paint(sprite: Player, context: CanvasRenderingContext2D) {
-      const cell = this.cells[this.cellIndex]
-
-      context.drawImage(this.spritesheet,
-        cell.left, cell.top,
-        cell.width, cell.height,
-        sprite.left, sprite.top,
-        cell.width, cell.height)
-
-      const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
-      const [centerX, centerY] = [left + width / 2, top + height / 2]
-      context.save()
-      context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
-
-      if (isShield) {
-        const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
-        context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
-        context.beginPath()
-        context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
-        context.closePath()
-        context.stroke()
-      }
-      context.restore()
-    }
-  }
 
   const normal: Behavior = {
     lastAdvance: 0,
@@ -99,8 +100,8 @@ export default (game: Game) => {
     execute: function (sprite: Player, context: CanvasRenderingContext2D, now: number) {
       if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL &&
         !(sprite.toLeft !== sprite.toRight)) {
-        sprite.painter.advance()
-        this.lastAdvance = now
+          sprite.painter.advance()
+          this.lastAdvance = now
       }
     }
   }
@@ -127,8 +128,8 @@ export default (game: Game) => {
         sprite.top <= 0 ? 0 : sprite.top
       if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL &&
         (sprite.toLeft || sprite.toRight)) {
-        sprite.painter.advance()
-        this.lastAdvance = now
+          sprite.painter.advance()
+          this.lastAdvance = now
       }
     }
   }

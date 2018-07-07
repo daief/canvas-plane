@@ -443,3 +443,5 @@ export default class Game {
 
   }
 }
+
+export const game = new Game('project', 'canvas')

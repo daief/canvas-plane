@@ -104,9 +104,9 @@ export class SpriteAnimator {
 
     interval = setInterval(() => {
       if (+new Date() < endTime) {
-        sprite.painter = this.painters[++this.index];
-      }
-      else {
+        this.index += 1
+        sprite.painter = this.painters[this.index] || sprite.painter
+      } else {
         this.end(sprite, originalPainter);
         clearInterval(interval);
       }
