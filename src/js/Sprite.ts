@@ -1,4 +1,4 @@
-import { Painter, SheetCell, Behavior } from "./modals";
+import { Painter, SheetCell, Behavior, Rect } from "./modals";
 
 /**
  * 图像绘制器
@@ -157,6 +157,21 @@ export class Sprite {
   update(context: CanvasRenderingContext2D, time: number) {
     for (let index = this.behaviors.length; index > 0; index--) {
       this.behaviors[index - 1].execute(this, context, time)
+    }
+  }
+
+  getCoreRect(): Rect {
+    const {left, top, width, height, coreWidth, coreHeight} = this
+    return coreWidth > 0 && coreHeight > 0 ? {
+      left: left + (width - coreWidth) / 2,
+      top: top + (height - coreHeight) / 2,
+      width: coreWidth,
+      height: coreHeight,
+    } : {
+      left,
+      top,
+      width,
+      height,
     }
   }
 }

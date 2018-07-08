@@ -6,6 +6,9 @@ import core from '../assets/core.png'
 import {Player, getPlayer} from './sprites/Player'
 import { pBulletsManager } from './sprites/PBullet'
 import {getEnemy} from './sprites/Enemy'
+import { eBulletsManager } from './sprites/EBullet';
+import { is2RectIntersect } from './utils';
+import { Rect } from './modals';
 
 game.startAnimate = function (time) {
   // 添加 bullet
@@ -21,6 +24,18 @@ game.paintUnderSprites = function () {
   this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${
     visibleSprites}/${this.sprites.length}  ${
       parseInt((this.gameTime / 1000).toString())}`, 5, 15)
+}
+
+game.paintOverSprites = function() {
+  const list = eBulletsManager.enemyBulletList
+  for (const bullet of list) {
+    if (bullet.visible) {
+      if (is2RectIntersect(bullet.getCoreRect(), game.getSprite('player').getCoreRect())) {
+        console.log('dddd')
+        bullet.visible = false
+      }
+    }
+  }
 }
 
 game.queueImage(playerSheet)
