@@ -118,6 +118,13 @@ function addKeyListeners(game: Game, player: Player) {
   })
 
   game.addKeyListener({
+    key: 'shift',
+    listener: (e: KeyboardEvent, status: boolean) => {
+      player.setVelocitySlow(status)
+    },
+  })
+
+  game.addKeyListener({
     key: 'p',
     listener: (e: KeyboardEvent, status: boolean) => {
       if (!status) game.togglePaused()

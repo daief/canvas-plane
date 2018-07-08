@@ -124,6 +124,9 @@ export default class Game {
       case 40:
         key = 'down arrow'
         break
+      case 16:
+        key = 'shift'
+        break
     }
 
     listener = this.findKeyListener(key)

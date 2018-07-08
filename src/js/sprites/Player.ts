@@ -40,6 +40,8 @@ const toRightCells: SheetCell[] = [
 const rightCells: SheetCell[] = [
   { left: 224, top: 97, width: 32, height: 48 },
 ]
+const normalVelocityX = 220
+const normalVelocityY = 240
 
 export class Player extends Sprite {
   toUp: boolean
@@ -49,6 +51,7 @@ export class Player extends Sprite {
   isShield: boolean = false
   shieldTimer: number
   attack: number = 5
+  shift: boolean
   leftCalled: (status: boolean) => void
   rightCalled: (status: boolean) => void
   getShield(duration: number) {
@@ -59,6 +62,16 @@ export class Player extends Sprite {
       this.isShield = false
       clearTimeout(this.shieldTimer)
     }, duration || 10000);
+  }
+  setVelocitySlow(status: boolean) {
+    this.shift = status
+    if (status) {
+      this.velocityX = normalVelocityX / 2
+      this.velocityY = normalVelocityY / 2
+    } else {
+      this.velocityX = normalVelocityX
+      this.velocityY = normalVelocityY
+    }
   }
 }
 
@@ -75,7 +88,9 @@ class PlayerSheetPainter extends SpriteSheetPainter {
     const {width, height, top, left, coreWidth, coreHeight, isShield} = sprite
     const [centerX, centerY] = [left + width / 2, top + height / 2]
     context.save()
-    context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
+    if (sprite.shift) {
+      context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
+    }
 
     if (isShield) {
       const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
@@ -197,8 +212,8 @@ export function getPlayer () {
   player.coreWidth = 10
   player.coreHeight = 10
 
-  player.velocityX = 190
-  player.velocityY = 200
+  player.velocityX = normalVelocityX
+  player.velocityY = normalVelocityY
 
   player.toUp = false
   player.toDown = false

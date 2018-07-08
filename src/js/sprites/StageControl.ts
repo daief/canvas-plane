@@ -77,10 +77,10 @@ class StageControl {
       this.lastTime = time
       return
     }
-    if (game.score >= 4 && time - this.lastTime >= 1000 && this.getVisibleEnemyNum() < 4) {
+    if (game.score >= 4 && time - this.lastTime >= 2000 && this.getVisibleEnemyNum() < 4) {
       const behavior1: Behavior = {
         lastAdvance: 0,
-        PAGEFLIP_INTERVAL: 1000,
+        PAGEFLIP_INTERVAL: 1300,
         execute: function (sprite: Enemy, context: CanvasRenderingContext2D, now: number) {
           if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL && game.H - sprite.top > 100) {
             sprite.fire(now)
