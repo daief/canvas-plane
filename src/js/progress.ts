@@ -14,7 +14,7 @@ import { Sprite } from './Sprite';
 import { stageControl } from './sprites/StageControl';
 
 let bgOffset = 0
-const bgSpeed = 70
+const bgSpeed = 80
 game.startAnimate = function (time) {
   // bg
   const bgImg = game.getImage(bg1)
