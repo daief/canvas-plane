@@ -40,7 +40,7 @@ const buildBullet = (game: Game, sheet: string) => {
     }
   }
 
-  const bullet = new Sprite(`bullet${getGUID()}`, new BulletPainter(sheet), [normal])
+  const bullet = new Sprite(`pBullet-${getGUID()}`, new BulletPainter(sheet), [normal])
 
   bullet.width = cell.width
   bullet.height = cell.height

@@ -110,4 +110,5 @@ export default () => {
       game.start()
     }
   }, 30)
+  console.log(game)
 }

@@ -289,7 +289,7 @@ export default class Game {
   updateSprites(time: number) {
     for (let i = 0; i < this.sprites.length; i++) {
       let sprite = this.sprites[i]
-      sprite.update(this.context, time)
+      sprite.visible && sprite.update(this.context, time)
     }
   }
 
