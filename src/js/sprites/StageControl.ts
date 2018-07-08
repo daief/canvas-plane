@@ -91,7 +91,7 @@ class StageControl {
 
       const e = getEnemy([normalMove, {...behavior1}])
       const rs = game.setFreeSpriteNew(e)
-      const pArr = [{x: 100, y: 0},{x: 0, y: 70},{x: 0, y: 130},{x: 200, y: 0},{x: 300, y: 0},{x: 400, y: 100},]
+      const pArr = [{x: 100, y: 0},{x: 0, y: 70},{x: 0, y: 130},{x: 200, y: 0},{x: 300, y: 0},{x: 500, y: 100},]
       const position = pArr[parseInt((Math.random() * pArr.length).toString())]
       this.addToList(rs, e)
       e.hp = 61
