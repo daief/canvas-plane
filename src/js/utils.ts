@@ -35,6 +35,17 @@ function getVAngle(x: number, y: number): number {
   return Math.acos(x / (Math.sqrt(x * x + y * y)))
 }
 
+// 根据两点与 ylen 大小，以及 len 返回 x,y
+export function getVelocityByLenPoint2Player (x: number, y: number, x1: number, y1: number, len: number) {
+  const L = Math.sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1))
+  const ry = len / L * (y1 - y)
+  const rx = len / L * (x1 - x)
+  return {
+    x: rx,
+    y: ry,
+  }
+}
+
 export {
   getTimeNow,
   getGUID,

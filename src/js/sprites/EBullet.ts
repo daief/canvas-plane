@@ -71,7 +71,7 @@ class EBulletsManager {
     return b
   }
 
-  addEnemyBullet(time: number, behaviors: Behavior[]) {
+  addEnemyBullet(behaviors: Behavior[]) {
     const b = this.getBullet() || this.addBullet()
     b.behaviors = [normal, ...behaviors]
     return b
@@ -79,3 +79,4 @@ class EBulletsManager {
 }
 
 export const eBulletsManager = new EBulletsManager()
+console.log(eBulletsManager)

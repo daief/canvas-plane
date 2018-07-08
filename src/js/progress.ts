@@ -9,10 +9,17 @@ import {getEnemy} from './sprites/Enemy'
 import { eBulletsManager } from './sprites/EBullet';
 import { is2RectIntersect } from './utils';
 import { Rect } from './modals';
+import { Sprite } from './Sprite';
+import { stageControl } from './sprites/StageControl';
+
+let enemyList: Sprite[] = []
+let lastEnemyTime = 0
 
 game.startAnimate = function (time) {
   // 添加 bullet
   pBulletsManager.addPlayerBullet(time)
+
+  stageControl.display(time)
 }
 
 game.paintUnderSprites = function () {
@@ -29,11 +36,9 @@ game.paintUnderSprites = function () {
 game.paintOverSprites = function() {
   const list = eBulletsManager.enemyBulletList
   for (const bullet of list) {
-    if (bullet.visible) {
-      if (is2RectIntersect(bullet.getCoreRect(), game.getSprite('player').getCoreRect())) {
-        console.log('dddd')
+    if (bullet.visible
+      && is2RectIntersect(bullet.getCoreRect(), game.getSprite('player').getCoreRect())) {
         bullet.visible = false
-      }
     }
   }
 }
@@ -97,20 +102,6 @@ function addKeyListeners(game: Game, player: Player) {
   })
 }
 
-
-// let loadingInterval = setInterval(() => {
-//   if (game.loadImages() >= 100) {
-//     clearInterval(loadingInterval)
-
-//     const player = getPlayer()
-//     game.addSprite(player)
-
-//     addKeyListeners(game, player)
-
-//     game.start()
-//   }
-// }, 30)
-
 export default () => {
   let loadingInterval = setInterval(() => {
     if (game.loadImages() >= 100) {
@@ -118,7 +109,6 @@ export default () => {
 
       const player = getPlayer()
       game.addSprite(player)
-      game.addSprite(getEnemy())
 
       addKeyListeners(game, player)
 

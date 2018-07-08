@@ -22,9 +22,9 @@ export interface SheetCell {
 }
 
 export interface Behavior {
-  lastAdvance: number
-    PAGEFLIP_INTERVAL: number
-    execute:  (sprite: Sprite, context: CanvasRenderingContext2D, now: number) => void
+  lastAdvance?: number
+  PAGEFLIP_INTERVAL?: number
+  execute:  (sprite: Sprite, context: CanvasRenderingContext2D, now: number) => void
 }
 
 export interface Rect {

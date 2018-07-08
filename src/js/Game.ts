@@ -1,7 +1,7 @@
 import {
   getTimeNow
 } from './utils'
-import { KeyListener, KeyImagePair } from "./modals"
+import { KeyListener, KeyImagePair, Rect } from "./modals"
 import { Sprite } from './Sprite';
 
 export default class Game {
@@ -15,6 +15,7 @@ export default class Game {
   sprites: Sprite[]
   keyListeners: KeyListener[]
   HIGH_SCORES_SUFFIX: string = '_highscores'
+  score: number
   images: KeyImagePair
   imageUrls: string[]
   imagesLoaded: number
@@ -53,6 +54,8 @@ export default class Game {
     this.gameName = gameName
     this.sprites = []
     this.keyListeners = []
+
+    this.score = 0
 
     // image loading
     // this.imageLoadingProgressCallback = null
@@ -441,6 +444,29 @@ export default class Game {
 
   endAnimate() {
 
+  }
+
+  // set a free sprite to a new sprite
+  // return old sprite address
+  setFreeSpriteNew(sprite: Sprite): Sprite|null {
+    for (let index = 0; index < this.sprites.length; index++) {
+      const element = this.sprites[index]
+      if (!element.visible) {
+        this.sprites[index] = sprite
+        return element
+      }
+    }
+    this.addSprite(sprite)
+    return null
+  }
+
+  getRect(): Rect {
+    return {
+      left: 0,
+      top: 0,
+      width: this.W,
+      height: this.H,
+    }
   }
 }
 
