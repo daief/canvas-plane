@@ -5,15 +5,12 @@ import enemy1 from '../assets/enemy1.png'
 import core from '../assets/core.png'
 import {Player, getPlayer} from './sprites/Player'
 import { pBulletsManager } from './sprites/PBullet'
-import {getEnemy} from './sprites/Enemy'
+import {getEnemy, Enemy} from './sprites/Enemy'
 import { eBulletsManager } from './sprites/EBullet';
 import { is2RectIntersect } from './utils';
 import { Rect } from './modals';
 import { Sprite } from './Sprite';
 import { stageControl } from './sprites/StageControl';
-
-let enemyList: Sprite[] = []
-let lastEnemyTime = 0
 
 game.startAnimate = function (time) {
   // 添加 bullet
@@ -28,17 +25,43 @@ game.paintUnderSprites = function () {
   for (const s of this.sprites) {
     visibleSprites += s.visible
   }
-  this.context.fillText(`fps: ${parseInt(this.fps)} sprites: ${
-    visibleSprites}/${this.sprites.length}  ${
-      parseInt((this.gameTime / 1000).toString())}`, 5, 15)
+  const {context, fps, sprites, gameTime, score} = this
+  context.fillText(`fps: ${parseInt(fps)} sprites: ${
+    visibleSprites}/${sprites.length}  time: ${
+      parseInt((gameTime / 1000).toString())} score: ${score}`, 5, 15)
 }
 
 game.paintOverSprites = function() {
-  const list = eBulletsManager.enemyBulletList
-  for (const bullet of list) {
+  const player = <Player>game.getSprite('player')
+  const pCore = player.getCoreRect()
+
+  for (const bullet of eBulletsManager.enemyBulletList) {
     if (bullet.visible
-      && is2RectIntersect(bullet.getCoreRect(), game.getSprite('player').getCoreRect())) {
+      && is2RectIntersect(bullet.getCoreRect(), pCore)) {
         bullet.visible = false
+        // 击中玩家
+    }
+  }
+
+  for (let i = 0; i < stageControl.enemyLists.length; i++) {
+    const enemy = <Enemy>stageControl.enemyLists[i]
+
+    if (is2RectIntersect(enemy.getCoreRect(), pCore)) {
+      // 玩家与敌机相撞
+
+    }
+
+    for (let j = 0; j < pBulletsManager.playerBullets.length; j++) {
+      const pBullet = pBulletsManager.playerBullets[j]
+      if (enemy.visible && pBullet.visible && is2RectIntersect(enemy.getCoreRect(), pBullet.getCoreRect())) {
+        // 击中敌军
+        enemy.hp -= player.attack
+        if (enemy.hp <= 0) {
+          enemy.visible = false
+          game.score += enemy.score
+        }
+        pBullet.visible = false
+      }
     }
   }
 }

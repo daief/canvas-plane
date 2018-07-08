@@ -13,6 +13,9 @@ const cells: SheetCell[] = [
 ]
 
 export class Enemy extends Sprite {
+  hp: number = 100
+  score: number = 1
+
   fire(time: number) {
     if (this.visible) {
       const player = game.getSprite('player')

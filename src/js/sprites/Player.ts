@@ -48,6 +48,7 @@ export class Player extends Sprite {
   toRight: boolean
   isShield: boolean = false
   shieldTimer: number
+  attack: number = 5
   leftCalled: (status: boolean) => void
   rightCalled: (status: boolean) => void
   getShield(duration: number) {
