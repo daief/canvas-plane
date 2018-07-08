@@ -94,7 +94,7 @@ class PlayerSheetPainter extends SpriteSheetPainter {
 
     if (isShield) {
       const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
-      context.strokeStyle = shieldColor[parseInt(Math.random() * (shieldColor.length + 1))]
+      context.strokeStyle = shieldColor[parseInt((Math.random() * (shieldColor.length + 1)).toString())]
       context.beginPath()
       context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
       context.closePath()

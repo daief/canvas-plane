@@ -3,6 +3,7 @@ import playerSheet from '../assets/pl00.png'
 import bullets1 from '../assets/bullets1.png'
 import enemy1 from '../assets/enemy1.png'
 import core from '../assets/core.png'
+import bg1 from '../assets/bg1.png'
 import {Player, getPlayer} from './sprites/Player'
 import { pBulletsManager } from './sprites/PBullet'
 import {getEnemy, Enemy} from './sprites/Enemy'
@@ -12,7 +13,18 @@ import { Rect } from './modals';
 import { Sprite } from './Sprite';
 import { stageControl } from './sprites/StageControl';
 
+let bgOffset = 0
+const bgSpeed = 70
 game.startAnimate = function (time) {
+  // bg
+  const bgImg = game.getImage(bg1)
+  game.context.drawImage(bgImg, 0, bgOffset - 512)
+  game.context.drawImage(bgImg, 0, 0 + bgOffset)
+  game.context.drawImage(bgImg, 0, bgOffset + 512)
+  bgOffset += game.pixelsPerFrame(time, bgSpeed)
+  bgOffset = bgOffset > 512 ? 0 : bgOffset
+
+
   // 添加 bullet
   pBulletsManager.addPlayerBullet(time)
 
@@ -22,11 +34,11 @@ game.startAnimate = function (time) {
 game.paintUnderSprites = function () {
   // 可见精灵数
   let visibleSprites = 0
-  for (const s of this.sprites) {
-    visibleSprites += s.visible
+  for (const s of game.sprites) {
+    visibleSprites += +s.visible
   }
-  const {context, fps, sprites, gameTime, score} = this
-  context.fillText(`fps: ${parseInt(fps)} sprites: ${
+  const {context, fps, sprites, gameTime, score} = game
+  context.fillText(`fps: ${parseInt(fps.toString())} sprites: ${
     visibleSprites}/${sprites.length}  time: ${
       parseInt((gameTime / 1000).toString())} score: ${score}`, 5, 15)
 }
@@ -70,6 +82,7 @@ game.queueImage(playerSheet)
 game.queueImage(bullets1)
 game.queueImage(core)
 game.queueImage(enemy1)
+game.queueImage(bg1)
 
 /**
  * 添加事件监听
