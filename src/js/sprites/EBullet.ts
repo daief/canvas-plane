@@ -1,10 +1,10 @@
 import Game, {game} from "../Game";
-import enemy1 from '../../assets/enemy1.png'
+import bullet3 from '../../assets/bullet3.png'
 import { Sprite, ImagePainter } from "../Sprite";
 import { Behavior, Rect } from "../modals";
 import { is2RectIntersect, getGUID } from "../utils";
 
-const cell = { left: 135, top: 260, width: 18, height: 20 }
+const cell = { left: 40, top: 72, width: 16, height: 16 }
 
 class BulletPainter extends ImagePainter {
   paint(sprite: Sprite, context: CanvasRenderingContext2D) {
@@ -65,7 +65,7 @@ class EBulletsManager {
   }
 
   private addBullet() {
-    const b = buildBullet(game, enemy1)
+    const b = buildBullet(game, bullet3)
     game.addSprite(b)
     this.enemyBulletList.push(b)
     return b

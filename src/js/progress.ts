@@ -1,6 +1,7 @@
 import Game, { game } from './Game'
 import playerSheet from '../assets/pl00.png'
 import bullets1 from '../assets/bullets1.png'
+import bullet3 from '../assets/bullet3.png'
 import enemy1 from '../assets/enemy1.png'
 import core from '../assets/core.png'
 import bg1 from '../assets/bg1.png'
@@ -38,9 +39,12 @@ game.paintUnderSprites = function () {
     visibleSprites += +s.visible
   }
   const {context, fps, sprites, gameTime, score} = game
+  context.save()
+  context.fillStyle = '#fff'
   context.fillText(`fps: ${parseInt(fps.toString())} sprites: ${
     visibleSprites}/${sprites.length}  time: ${
       parseInt((gameTime / 1000).toString())} score: ${score}`, 5, 15)
+  context.restore()
 }
 
 game.paintOverSprites = function() {
@@ -83,6 +87,7 @@ game.queueImage(bullets1)
 game.queueImage(core)
 game.queueImage(enemy1)
 game.queueImage(bg1)
+game.queueImage(bullet3)
 
 /**
  * 添加事件监听
