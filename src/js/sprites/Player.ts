@@ -89,7 +89,7 @@ class PlayerSheetPainter extends SpriteSheetPainter {
     const [centerX, centerY] = [left + width / 2, top + height / 2]
     context.save()
     if (sprite.shift) {
-      context.drawImage(game.getImage(core), centerX - 5, centerY - 5)
+      context.drawImage(game.getImage(core), centerX - coreWidth / 2, centerY - coreHeight / 2)
     }
 
     if (isShield) {
