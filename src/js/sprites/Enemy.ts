@@ -1,9 +1,11 @@
 import Game, {game} from "../Game";
 import enemy1 from '../../assets/enemy1.png'
-import { Sprite, SpriteSheetPainter } from "../Sprite";
+import { Sprite, SpriteSheetPainter, SpriteAnimator } from "../Sprite";
 import { SheetCell, Behavior, Rect } from "../modals";
 import { getGUID, is2RectIntersect, getVelocityByLenPoint2Player } from "../utils";
 import { eBulletsManager } from "./EBullet";
+import { Player } from "./Player";
+import { showBlast } from "./Blast";
 
 const cells: SheetCell[] = [
   { left: 0,   top: 0, width: 48, height: 32 },
@@ -18,7 +20,7 @@ export class Enemy extends Sprite {
 
   fire(time: number) {
     if (this.visible) {
-      const player = game.getSprite('player')
+      const player = <Player>game.getSprite('player')
       const core = player.getCoreRect()
       const {left, top, width, height} = this
       const b = eBulletsManager.addEnemyBullet([])
@@ -28,6 +30,17 @@ export class Enemy extends Sprite {
       const v = getVelocityByLenPoint2Player(b.left, b.top, core.left, core.top, 150)
       b.velocityX = v.x
       b.velocityY = v.y
+    }
+  }
+
+  beHit() {
+    const player = <Player>game.getSprite('player')
+    const {attack} = player
+    this.hp -= attack
+    if (this.hp <= 0) {
+      game.score += this.score
+      this.visible = false
+      showBlast(this)
     }
   }
 }

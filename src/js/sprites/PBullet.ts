@@ -14,14 +14,14 @@ class BulletPainter extends ImagePainter {
         this.image.onload = (e) => {
           context.drawImage(this.image,
             cell.left, cell.top,
-            cell.width, cell.height,
+            cell.width * 2, cell.height * 2,
             sprite.left, sprite.top,
             cell.width, cell.height)
         }
       } else {
         context.drawImage(this.image,
           cell.left, cell.top,
-          cell.width, cell.height,
+          cell.width * 2, cell.height * 2,
           sprite.left, sprite.top,
           cell.width, cell.height)
       }

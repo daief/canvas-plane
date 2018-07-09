@@ -5,6 +5,7 @@ import bullet3 from '../assets/bullet3.png'
 import enemy1 from '../assets/enemy1.png'
 import core from '../assets/core.png'
 import bg1 from '../assets/bg1.png'
+import arua from '../assets/arua.png'
 import {Player, getPlayer} from './sprites/Player'
 import { pBulletsManager } from './sprites/PBullet'
 import {getEnemy, Enemy} from './sprites/Enemy'
@@ -63,7 +64,7 @@ game.paintOverSprites = function() {
   for (let i = 0; i < stageControl.enemyLists.length; i++) {
     const enemy = <Enemy>stageControl.enemyLists[i]
 
-    if (is2RectIntersect(enemy.getCoreRect(), pCore)) {
+    if (enemy.visible && is2RectIntersect(enemy.getCoreRect(), pCore)) {
       // 玩家与敌机相撞
       player.beHit()
     }
@@ -72,11 +73,7 @@ game.paintOverSprites = function() {
       const pBullet = pBulletsManager.playerBullets[j]
       if (enemy.visible && pBullet.visible && is2RectIntersect(enemy.getCoreRect(), pBullet.getCoreRect())) {
         // 击中敌军
-        enemy.hp -= player.attack
-        if (enemy.hp <= 0) {
-          enemy.visible = false
-          game.score += enemy.score
-        }
+        enemy.beHit()
         pBullet.visible = false
       }
     }
@@ -89,6 +86,7 @@ game.queueImage(core)
 game.queueImage(enemy1)
 game.queueImage(bg1)
 game.queueImage(bullet3)
+game.queueImage(arua)
 
 /**
  * 添加事件监听
