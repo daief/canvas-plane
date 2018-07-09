@@ -1,4 +1,4 @@
-import { SheetCell, Behavior } from "../modals";
+import { SheetCell, Behavior, Rect } from "../modals";
 import Game, {game} from "../Game";
 import playerSheet from '../../assets/pl00.png'
 import core from '../../assets/core.png'
@@ -42,6 +42,7 @@ const rightCells: SheetCell[] = [
 ]
 const normalVelocityX = 220
 const normalVelocityY = 240
+const SHIELD_R = 30
 
 export class Player extends Sprite {
   toUp: boolean
@@ -63,6 +64,7 @@ export class Player extends Sprite {
       clearTimeout(this.shieldTimer)
     }, duration || 10000);
   }
+
   setVelocitySlow(status: boolean) {
     this.shift = status
     if (status) {
@@ -71,6 +73,21 @@ export class Player extends Sprite {
     } else {
       this.velocityX = normalVelocityX
       this.velocityY = normalVelocityY
+    }
+  }
+
+  getCoreRect(): Rect {
+    const {left, top, width, height, coreWidth, coreHeight, isShield} = this
+    return isShield ? {
+      left: left + width / 2 - SHIELD_R,
+      top: top + height / 2 - SHIELD_R,
+      width: 2 * SHIELD_R,
+      height: 2 * SHIELD_R,
+    } : {
+      left: left + (width - coreWidth) / 2,
+      top: top + (height - coreHeight) / 2,
+      width: coreWidth,
+      height: coreHeight,
     }
   }
 }
@@ -96,7 +113,7 @@ class PlayerSheetPainter extends SpriteSheetPainter {
       const shieldColor = ['#de5050', '#d07926', '#8ae242', '#38ccad', '#3031cc', '#bf30cc']
       context.strokeStyle = shieldColor[parseInt((Math.random() * (shieldColor.length + 1)).toString())]
       context.beginPath()
-      context.arc(centerX, centerY, 30, 0, 2 * Math.PI)
+      context.arc(centerX, centerY, SHIELD_R, 0, 2 * Math.PI)
       context.closePath()
       context.stroke()
     }
