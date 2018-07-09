@@ -67,7 +67,7 @@ class StageControl {
       const e2 = getEnemy([normalMove, {...b1}])
       const rs2 = game.setFreeSpriteNew(e2)
       this.addToList(rs2, e2)
-      e.hp = 350
+      e2.hp = 350
       e2.left = game.W - 100 - e2.width
       e2.top = 0
       e2.velocityX = 0

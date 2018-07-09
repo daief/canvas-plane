@@ -454,7 +454,7 @@ export default class Game {
   setFreeSpriteNew(sprite: Sprite): Sprite|null {
     for (let index = 0; index < this.sprites.length; index++) {
       const element = this.sprites[index]
-      if (!element.visible) {
+      if (!element.visible && element.name !== 'player') {
         this.sprites[index] = sprite
         return element
       }

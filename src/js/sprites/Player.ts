@@ -92,12 +92,43 @@ export class Player extends Sprite {
   }
 
   beHit() {
-    const {isShield, } = this
+    const {isShield, width} = this
     if (!isShield) {
-      this.visible = false
-      this.left = -100
-      this.top = -100
+      this.clean()
+      let refresh = setTimeout(() => {
+        clearTimeout(refresh)
+        this.setPropsInit()
+        this.getShield(5000)
+      }, 2000)
     }
+  }
+
+  clean() {
+    const {width} = this
+    this.visible = false
+    this.left = (game.W - width) / 2
+    this.top = 1e4
+    this.shieldTimer && clearTimeout(this.shieldTimer)
+    this.isShield = false
+  }
+
+  setPropsInit() {
+    this.width = 32
+    this.height = 48
+    this.left = (game.W - player.width) / 2
+    this.top = game.H - player.height - 50
+    this.coreWidth = 10
+    this.coreHeight = 10
+
+    this.velocityX = normalVelocityX
+    this.velocityY = normalVelocityY
+
+    this.toUp = false
+    this.toDown = false
+    this.toLeft = false
+    this.toRight = false
+    this.shift = false
+    this.visible = true
   }
 }
 
@@ -231,20 +262,7 @@ export function getPlayer () {
   }
 
   // player prop init
-  player.width = 32
-  player.height = 48
-  player.left = (game.W - player.width) / 2
-  player.top = game.H - player.height - 50
-  player.coreWidth = 10
-  player.coreHeight = 10
-
-  player.velocityX = normalVelocityX
-  player.velocityY = normalVelocityY
-
-  player.toUp = false
-  player.toDown = false
-  player.toLeft = false
-  player.toRight = false
+  player.setPropsInit()
 
   return player
 }
