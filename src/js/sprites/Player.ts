@@ -90,6 +90,15 @@ export class Player extends Sprite {
       height: coreHeight,
     }
   }
+
+  beHit() {
+    const {isShield, } = this
+    if (!isShield) {
+      this.visible = false
+      this.left = -100
+      this.top = -100
+    }
+  }
 }
 
 class PlayerSheetPainter extends SpriteSheetPainter {

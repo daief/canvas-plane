@@ -56,6 +56,7 @@ game.paintOverSprites = function() {
       && is2RectIntersect(bullet.getCoreRect(), pCore)) {
         bullet.visible = false
         // 击中玩家
+        player.beHit()
     }
   }
 
@@ -64,7 +65,7 @@ game.paintOverSprites = function() {
 
     if (is2RectIntersect(enemy.getCoreRect(), pCore)) {
       // 玩家与敌机相撞
-
+      player.beHit()
     }
 
     for (let j = 0; j < pBulletsManager.playerBullets.length; j++) {

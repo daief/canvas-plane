@@ -75,7 +75,8 @@ export class PBulletsManager {
   }
 
   addPlayerBullet(time: number) {
-    if (time - this.FIRE_LAST <= this.FIRE_TIME) return
+    const player = game.getSprite('player')
+    if (time - this.FIRE_LAST <= this.FIRE_TIME || !player.visible) return
 
     this.FIRE_LAST = time
 
