@@ -12,7 +12,7 @@ import { eBulletsManager } from './sprites/EBullet';
 import { is2RectIntersect } from './utils';
 import { Rect } from './modals';
 import { Sprite } from './Sprite';
-import { stageControl } from './sprites/StageControl';
+import { stageControl } from './StageControl';
 
 let bgOffset = 0
 const bgSpeed = 80

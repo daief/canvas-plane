@@ -1,8 +1,8 @@
-import { Sprite } from "../Sprite";
-import { game } from "../Game";
-import { getEnemy, Enemy } from "./Enemy";
-import { Behavior } from "../modals";
-import { is2RectIntersect, getVelocityByLenPoint2Player } from "../utils";
+import { Sprite } from "./Sprite";
+import { game } from "./Game";
+import { getEnemy, Enemy } from "./sprites/Enemy";
+import { Behavior } from "./modals";
+import { is2RectIntersect, getVelocityByLenPoint2Player } from "./utils";
 
 const normalMove: Behavior = {
   execute: function (sprite: Sprite, context: CanvasRenderingContext2D, now: number) {
