@@ -3,6 +3,7 @@ import Game, {game} from "../Game";
 import playerSheet from '../../assets/pl00.png'
 import core from '../../assets/core.png'
 import { Sprite, SpriteSheetPainter, SpriteAnimator } from "../Sprite";
+import { showBlast } from "./Blast";
 
 const normalCells: SheetCell[] = [
   { left: 0,   top: 0, width: 32, height: 48 },
@@ -94,12 +95,14 @@ export class Player extends Sprite {
   beHit() {
     const {isShield, width} = this
     if (!isShield) {
+      showBlast(this, () => {
+        let refresh = setTimeout(() => {
+          clearTimeout(refresh)
+          this.setPropsInit()
+          this.getShield(5000)
+        }, 2000)
+      })
       this.clean()
-      let refresh = setTimeout(() => {
-        clearTimeout(refresh)
-        this.setPropsInit()
-        this.getShield(5000)
-      }, 2000)
     }
   }
 

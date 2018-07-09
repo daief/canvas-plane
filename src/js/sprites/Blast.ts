@@ -15,9 +15,12 @@ const blastCells: SheetCell[] = [
   { left: 640,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
   { left: 768,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
   { left: 896,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
+  { left: 640,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
+  { left: 384,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
+  { left: 128,  top: 0, width: BLAST_SIZE, height: BLAST_SIZE },
 ]
 
-export function showBlast(sprite: Sprite) {
+export function showBlast(sprite: Sprite, callBack?: Function) {
   const normal: Behavior = {
     lastAdvance: 0,
     PAGEFLIP_INTERVAL: 100,
@@ -26,7 +29,10 @@ export function showBlast(sprite: Sprite) {
         sprite.painter.advance()
         this.lastAdvance = now
       }
-      if ((<SpriteSheetPainter>sprite.painter).cellIndex === blastCells.length - 1) sprite.visible = false
+      if ((<SpriteSheetPainter>sprite.painter).cellIndex === blastCells.length - 1) {
+        sprite.visible = false
+        callBack && callBack()
+      }
     }
   }
   const blastSprite = new Sprite(`blast-${getGUID()}`, new SpriteSheetPainter(blastCells, game.getImage(arua)), [normal])
