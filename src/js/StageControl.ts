@@ -107,7 +107,7 @@ class StageControl {
       this.lastTime = time
       return
     }
-    if (10 <= score && score < 1e5 && time - this.lastTime >= 2000 && this.getVisibleEnemyNum() < 1) {
+    if (10 <= score && score < 1e5 && time - this.lastTime >= 4000 && this.getVisibleEnemyNum() < 1) {
       const ABS_VElOCITY_X = 90
       const BOSS_HP = 1000
       const FIRE2_INTERVAL = 45
@@ -146,10 +146,10 @@ class StageControl {
 
       const behavior1: Behavior = {
         lastAdvance: 0,
-        PAGEFLIP_INTERVAL: 900,
+        PAGEFLIP_INTERVAL: 750,
         execute: function (sprite: Enemy, context: CanvasRenderingContext2D, now: number) {
           if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL && sprite.top > 20) {
-            sprite.fire(now)
+            sprite.fire(now, 230)
             this.lastAdvance = now
           }
         }
@@ -199,7 +199,7 @@ class StageControl {
         }
       }
 
-      const boss = getEnemy([normalMove, behavior1, behavior2, behavior3])
+      const boss = getEnemy([normalMove, behavior1, behavior2, {...behavior3}])
       const rs = game.setFreeSpriteNew(boss)
       this.addToList(rs, boss)
       boss.hp = BOSS_HP

@@ -18,16 +18,17 @@ export class Enemy extends Sprite {
   hp: number = 100
   score: number = 1
 
-  fire(time: number) {
+  // 普通自瞄弹
+  fire(time: number, speed: number = 150) {
     if (this.visible) {
       const player = <Player>game.getSprite('player')
-      const core = player.getCoreRect()
+      const core = player.getCenterPoint()
       const {left, top, width, height} = this
       const b = eBulletsManager.addEnemyBullet([])
       b.left = left + width / 2 - b.width / 2
       b.top = top + b.height + 3
       b.visible = true
-      const v = getVelocityByLenPoint2Player(b.left, b.top, core.left, core.top, 150)
+      const v = getVelocityByLenPoint2Player(b.left, b.top, core.left, core.top, speed)
       b.velocityX = v.x
       b.velocityY = v.y
     }
