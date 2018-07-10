@@ -34,7 +34,7 @@ const normal: Behavior = {
   execute: function(sprite, context, now) {
     sprite.left += game.pixelsPerFrame(now, sprite.velocityX)
     sprite.top += game.pixelsPerFrame(now, sprite.velocityY)
-    if (!is2RectIntersect(<Rect>sprite, {left: 0, top: 0, width: game.W, height: game.H}))  sprite.visible = false
+    if (!is2RectIntersect(<Rect>sprite, game.getRect())) sprite.visible = false
   }
 }
 
