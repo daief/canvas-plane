@@ -149,6 +149,20 @@ function addKeyListeners(game: Game, player: Player) {
   })
 }
 
+function addOptionsListener(p: Player) {
+  document.getElementsByClassName('options')[0].addEventListener('change', function(e: Event) {
+    const {value, checked} = <HTMLInputElement>e.target
+    switch(value) {
+      case 'shield':
+        p.isShield = checked
+        break
+      case 'attack':
+        p.attack = checked ? 50 : 5
+        break
+    }
+  })
+}
+
 export default () => {
   let loadingInterval = setInterval(() => {
     if (game.loadImages() >= 100) {
@@ -158,7 +172,7 @@ export default () => {
       game.addSprite(player)
 
       addKeyListeners(game, player)
-
+      addOptionsListener(player)
       game.start()
     }
   }, 30)
