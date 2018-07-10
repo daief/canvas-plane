@@ -149,7 +149,7 @@ class StageControl {
         PAGEFLIP_INTERVAL: 750,
         execute: function (sprite: Enemy, context: CanvasRenderingContext2D, now: number) {
           if (now - this.lastAdvance > this.PAGEFLIP_INTERVAL && sprite.top > 20) {
-            sprite.fire(now, 230)
+            sprite.fire(now, 240)
             this.lastAdvance = now
           }
         }

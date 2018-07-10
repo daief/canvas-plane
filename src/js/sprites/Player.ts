@@ -125,6 +125,7 @@ export class Player extends Sprite {
 
     this.velocityX = normalVelocityX
     this.velocityY = normalVelocityY
+    this.attack = 5
 
     this.toUp = false
     this.toDown = false
