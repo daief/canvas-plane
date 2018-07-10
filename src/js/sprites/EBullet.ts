@@ -79,4 +79,3 @@ class EBulletsManager {
 }
 
 export const eBulletsManager = new EBulletsManager()
-console.log(eBulletsManager)

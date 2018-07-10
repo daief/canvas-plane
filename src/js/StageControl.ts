@@ -217,4 +217,3 @@ class StageControl {
 }
 
 export const stageControl = new StageControl()
-console.log(stageControl)

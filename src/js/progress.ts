@@ -41,11 +41,14 @@ game.paintUnderSprites = function () {
     visibleSprites += +s.visible
   }
   const {context, fps, sprites, gameTime, score} = game
+  const player = <Player>game.getSprite('player')
+  const {attack} = player
   context.save()
   context.fillStyle = '#fff'
-  context.fillText(`fps: ${parseInt(fps.toString())} sprites: ${
-    visibleSprites}/${sprites.length}  time: ${
-      parseInt((gameTime / 1000).toString())} score: ${score}`, 5, 15)
+  context.fillText(`fps: ${parseInt(fps.toString())}, sprites: ${
+    visibleSprites}/${sprites.length}, time: ${
+      parseInt((gameTime / 1000).toString())}, score: ${
+        score}, attack: ${attack}`, 5, 15)
   context.restore()
 }
 
