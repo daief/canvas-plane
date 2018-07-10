@@ -109,7 +109,7 @@ class StageControl {
     }
     if (10 <= score && score < 1e5 && time - this.lastTime >= 4000 && this.getVisibleEnemyNum() < 1) {
       const ABS_VElOCITY_X = 90
-      const BOSS_HP = 1000
+      const BOSS_HP = 2400
       const FIRE2_INTERVAL = 45
       const ß = 15
       const rv = 70
@@ -202,7 +202,7 @@ class StageControl {
       const boss = getEnemy([normalMove, behavior1, behavior2, {...behavior3}])
       const rs = game.setFreeSpriteNew(boss)
       this.addToList(rs, boss)
-      boss.hp = BOSS_HP
+      boss.toBeBoss(BOSS_HP)
       boss.score = 10
       boss.left = (game.W - boss.width) / 2
       boss.top = 0

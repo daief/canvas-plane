@@ -14,9 +14,43 @@ const cells: SheetCell[] = [
   { left: 144,  top: 0, width: 48, height: 32 },
 ]
 
+class EnemySpriteSheetPainter extends SpriteSheetPainter {
+  paint(sprite: Enemy, context: CanvasRenderingContext2D) {
+    let cell = this.cells[this.cellIndex]
+    sprite.width = cell.width
+    sprite.height = cell.height
+    context.drawImage(this.spritesheet,
+      cell.left, cell.top,
+      cell.width, cell.height,
+      sprite.left, sprite.top,
+      cell.width, cell.height)
+
+    const {isBoss, initHp, hp} = sprite
+    if (isBoss) {
+      // 血条绘制
+      const L = game.W - 10 * 2
+      context.save()
+      context.fillStyle = '#fff'
+      context.strokeStyle = '#fff'
+      context.beginPath()
+      context.rect(10, 30, L, 4)
+      context.closePath()
+      context.stroke()
+      context.beginPath()
+      context.rect(10, 30, L * hp / initHp, 4);
+      context.closePath()
+      context.fill()
+      context.restore()
+    }
+  }
+}
+
 export class Enemy extends Sprite {
   hp: number = 100
   score: number = 1
+  // boss props
+  isBoss: boolean = false
+  initHp: number = 0
 
   // 普通自瞄弹
   fire(time: number, speed: number = 150) {
@@ -44,6 +78,12 @@ export class Enemy extends Sprite {
       showBlast(this)
     }
   }
+
+  toBeBoss(initHp: number) {
+    this.initHp = initHp
+    this.hp = initHp
+    this.isBoss = true
+  }
 }
 
 export function getEnemy(behaviors: Behavior[] = []) {
@@ -69,7 +109,7 @@ export function getEnemy(behaviors: Behavior[] = []) {
   //   }
   // }
 
-  const enemy = new Enemy(`enemy-${getGUID()}`, new SpriteSheetPainter(cells, game.getImage(enemy1)), [normal, ...behaviors])
+  const enemy = new Enemy(`enemy-${getGUID()}`, new EnemySpriteSheetPainter(cells, game.getImage(enemy1)), [normal, ...behaviors])
 
   enemy.velocityY = 20
   enemy.velocityX = 40
