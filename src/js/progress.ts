@@ -14,6 +14,7 @@ import { is2RectIntersect } from './utils';
 import { Rect } from './modals';
 import { Sprite } from './Sprite';
 import { stageControl } from './StageControl';
+import { getVisiblableBonusList } from './sprites/Bonus';
 
 let bgOffset = 0
 const bgSpeed = 80
@@ -76,6 +77,13 @@ game.paintOverSprites = function() {
         enemy.beHit()
         pBullet.visible = false
       }
+    }
+  }
+
+  for (const bouns of getVisiblableBonusList()) {
+    if (is2RectIntersect(bouns.getCoreRect(), pCore)) {
+      bouns.effect()
+      bouns.visible = false
     }
   }
 }

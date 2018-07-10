@@ -6,6 +6,7 @@ import { getGUID, is2RectIntersect, getVelocityByLenPoint2Player } from "../util
 import { eBulletsManager } from "./EBullet";
 import { Player } from "./Player";
 import { showBlast } from "./Blast";
+import { randomBonus } from "./Bonus";
 
 const cells: SheetCell[] = [
   { left: 0,   top: 0, width: 48, height: 32 },
@@ -75,6 +76,7 @@ export class Enemy extends Sprite {
     if (this.hp <= 0) {
       game.score += this.score
       this.visible = false
+      randomBonus(this.getCoreRect())
       showBlast(this)
     }
   }
