@@ -33,3 +33,8 @@ export interface Rect {
   width: number
   height: number
 }
+
+export interface Point {
+  left: number
+  top: number
+}

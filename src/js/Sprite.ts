@@ -1,4 +1,4 @@
-import { Painter, SheetCell, Behavior, Rect } from "./modals";
+import { Painter, SheetCell, Behavior, Rect, Point } from "./modals";
 
 /**
  * 图像绘制器
@@ -172,6 +172,13 @@ export class Sprite {
       top,
       width,
       height,
+    }
+  }
+
+  getCenterPoint(): Point {
+    return {
+      left: this.left + this.width / 2,
+      top: this.top + this.height / 2,
     }
   }
 }

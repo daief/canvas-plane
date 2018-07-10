@@ -3,11 +3,11 @@ import { Rect } from "./modals";
 /**
  * return time now
  */
-function getTimeNow(): number {
+export function getTimeNow(): number {
   return (+ new Date())
 }
 
-function getGUID(): string {
+export function getGUID(): string {
   // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript/8809472#8809472
   let time: number = (new Date()).getTime()
   if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
@@ -22,7 +22,7 @@ function getGUID(): string {
   return guid
 }
 
-function is2RectIntersect(rect1: Rect, rect2: Rect): boolean {
+export function is2RectIntersect(rect1: Rect, rect2: Rect): boolean {
   const maxLeft = Math.max(rect1.left, rect2.left)
   const maxTop = Math.max(rect1.top, rect2.top)
   const minRight = Math.min(rect1.left + rect1.width, rect2.left + rect2.width)
@@ -31,7 +31,7 @@ function is2RectIntersect(rect1: Rect, rect2: Rect): boolean {
 }
 
 // x, y 与水平夹角 弧度
-function getVAngle(x: number, y: number): number {
+export function getVAngle(x: number, y: number): number {
   return Math.acos(x / (Math.sqrt(x * x + y * y)))
 }
 
@@ -46,9 +46,26 @@ export function getVelocityByLenPoint2Player (x: number, y: number, x1: number, 
   }
 }
 
-export {
-  getTimeNow,
-  getGUID,
-  is2RectIntersect,
-  getVAngle,
+// 角度转弧度
+export function angle2radian(d: number) {
+  return d * Math.PI / 180
+}
+
+// 弧度转角度
+export function radian2angle(d: number) {
+  return d * 180 / Math.PI
+}
+
+// 延迟执行
+export function delay(fun: Function, time: number, args?: any) {
+  return new Promise((resolve, reject) => {
+    const tmp = setTimeout(() => {
+      try {
+        clearTimeout(tmp)
+        resolve(fun(args))
+      } catch (error) {
+        reject(error)
+      }
+    }, time)
+  })
 }
