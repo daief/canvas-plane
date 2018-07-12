@@ -73,8 +73,9 @@ game.paintOverSprites = function() {
       player.beHit()
     }
 
-    for (let j = 0; j < pBulletsManager.playerBullets.length; j++) {
-      const pBullet = pBulletsManager.playerBullets[j]
+    const playerBulletList = pBulletsManager.getPlayerBulletList()
+    for (let j = 0; j < playerBulletList.length; j++) {
+      const pBullet = playerBulletList[j]
       if (enemy.visible && pBullet.visible && is2RectIntersect(enemy.getCoreRect(), pBullet.getCoreRect())) {
         // 击中敌军
         enemy.beHit()
