@@ -1,4 +1,4 @@
-import Game, {game} from "../Game";
+import {game} from "../Game";
 import bullet3 from '../../assets/bullet3.png'
 import { Sprite, ImagePainter } from "../Sprite";
 import { Behavior, Rect } from "../modals";
@@ -38,43 +38,17 @@ const normal: Behavior = {
   }
 }
 
-const buildBullet = (game: Game, sheet: string) => {
-  const bullet = new Sprite(`eBullet-${getGUID()}`, new BulletPainter(sheet), [normal])
-
-  bullet.width = cell.width
-  bullet.height = cell.height
-
-  bullet.velocityY = -770
-
-  return bullet
-}
-
 class EBulletsManager {
-  enemyBulletList: Sprite[]
-
-  constructor() {
-    this.enemyBulletList = []
-  }
-
-  private getBullet() {
-    for (const bullet of this.enemyBulletList) {
-      if (!bullet.visible)
-        return bullet
-    }
-    return null
-  }
-
-  private addBullet() {
-    const b = buildBullet(game, bullet3)
-    game.addSprite(b)
-    this.enemyBulletList.push(b)
-    return b
-  }
-
   addEnemyBullet(behaviors: Behavior[]) {
-    const b = this.getBullet() || this.addBullet()
-    b.behaviors = [normal, ...behaviors]
+    const b = new Sprite(`eBullet-${getGUID()}`, new BulletPainter(bullet3), [normal, ...behaviors])
+    game.setFreeSpriteNew(b)
     return b
+  }
+
+  getEnemyBulletList(): Sprite[] {
+    return game.sprites.filter((s: Sprite) => {
+      return s.visible && s.name.startsWith('eBullet')
+    })
   }
 }
 

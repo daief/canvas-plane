@@ -56,7 +56,7 @@ game.paintOverSprites = function() {
   const player = <Player>game.getSprite('player')
   const pCore = player.getCoreRect()
 
-  for (const bullet of eBulletsManager.enemyBulletList) {
+  for (const bullet of eBulletsManager.getEnemyBulletList()) {
     if (bullet.visible
       && is2RectIntersect(bullet.getCoreRect(), pCore)) {
         bullet.visible = false
