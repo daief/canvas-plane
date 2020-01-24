@@ -7,13 +7,13 @@ canvas plane，小游戏
 
 ```bash
 # install
-npm install
+$ yarn
 
 # dev
-npm run dev
+$ yarn dev
 
 # build
-npm run build
+$ yarn build
 ```
 
 [Building with --no-cache gives correct bundle every time.](https://github.com/parcel-bundler/parcel/issues/1656)
